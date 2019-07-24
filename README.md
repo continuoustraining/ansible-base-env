@@ -1,11 +1,11 @@
 ### Intro
 
-This project aims to use ansible with docker containers. It allows the use to run ansible command as if they were executed directly from their host, while in fact, they are performed over an ansible docker container.
+This project aims to use ansible with docker containers. It allows the user to run ansible command as if they were executed directly from their host, while in fact, they are performed over an ansible docker container.
 This is a base environment for practical exercices on Ansible during trainings and coachings.
 
 ### Dependencies
-* pip3 install ansible
-* pip3 install docker-compose
+* `pip3 install ansible`
+* `pip3 install docker-compose`
 
 ### Deploying our base containers by using an ansible playbook
 * `$ source ansible/aliases`
