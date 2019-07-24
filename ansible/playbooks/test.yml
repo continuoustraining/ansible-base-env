@@ -1,0 +1,11 @@
+---
+- hosts: app
+  remote_user: root
+  gather_facts: true
+  tasks:
+    - name: "nginx setup"
+      apt: 
+        update_cache: yes
+        name: nginx
+    - name: "nginx startup"
+      shell: service nginx start

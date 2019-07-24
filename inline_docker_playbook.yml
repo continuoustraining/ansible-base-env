@@ -1,0 +1,133 @@
+- name: Run with inline docker-compose.yml
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    #here we down the stack => similar to docker-compose down
+    - docker_compose:
+        project_name: node
+        remove_images: all
+        definition:
+            version: '3.7'
+            services:
+                ansible:
+                  container_name: ansible
+                  build: "{{ playbook_dir }}/ansible/"
+                  volumes:
+                    - "{{ playbook_dir }}/ansible/playbooks:/ansible/playbooks"
+                    - "{{ playbook_dir }}/ansible/inventory:/ansible/inventory"
+                    - "{{ playbook_dir }}/ansible/ansible.key.pub:/root/.ssh/id_rsa.pub"
+                    - "{{ playbook_dir }}/ansible/ansible.key:/root/.ssh/id_rsa"
+                db:
+                  image: redis:4.0
+                  ports:
+                    - 22
+                reverse_proxy:
+                  container_name: reverse_proxy
+                  image: nginx:1.17.1
+                  volumes:
+                    - "{{ playbook_dir }}/reverse_proxy/nginx.conf:/etc/nginx/nginx.conf"
+                    - ~/.ssh/id_rsa.pub:/home/ubuntu/.ssh/authorized_keys
+                  ports:
+                    - 80:80
+                    - 22
+                  depends_on:
+                    - app
+                loadbalancer1:
+                  image: nginx:1.17.1
+                  volumes:
+                    - "{{ playbook_dir }}/loadbalancer/nginx.conf:/etc/nginx/nginx.conf"
+                  depends_on:
+                    - app
+                loadbalancer2:
+                  image: nginx:1.17.1
+                  volumes:
+                    - "{{ playbook_dir }}/loadbalancer/nginx.conf:/etc/nginx/nginx.conf"
+                  depends_on:
+                    - app
+                loadbalancer3:
+                  image: nginx:1.17.1
+                  volumes:
+                    - "{{ playbook_dir }}/loadbalancer/nginx.conf:/etc/nginx/nginx.conf"
+                  depends_on:
+                    - app
+                app:
+                  container_name: app
+                  build: "{{ playbook_dir }}/app/"
+                  ports:
+                    - 8080
+                  depends_on:
+                    - db
+        state: absent
+      register: output
+
+    #here we inititate the stack
+    - docker_compose:
+        project_name: node
+        nocache: yes
+        recreate: always
+        definition:
+            version: '3.7'
+            services:
+                ansible:
+                  container_name: ansible
+                  build: "{{ playbook_dir }}/ansible/"
+                  volumes:
+                    - "{{ playbook_dir }}/ansible/playbooks:/ansible/playbooks"
+                    - "{{ playbook_dir }}/ansible/inventory:/ansible/inventory"
+                    - "{{ playbook_dir }}/ansible/ansible.key.pub:/root/.ssh/id_rsa.pub"
+                    - "{{ playbook_dir }}/ansible/ansible.key:/root/.ssh/id_rsa"
+                db:
+                  container_name: db
+                  image: redis:4.0
+                reverse_proxy:
+                  container_name: reverse_proxy
+                  image: nginx:1.17.1
+                  volumes:
+                    - "{{ playbook_dir }}/reverse_proxy/nginx.conf:/etc/nginx/nginx.conf"
+                    - ~/.ssh/id_rsa.pub:/home/ubuntu/.ssh/authorized_keys
+                  ports:
+                    - 80:80
+                    - 22
+                  depends_on:
+                    - app
+                loadbalancer1:
+                  image: nginx:1.17.1
+                  volumes:
+                    - "{{ playbook_dir }}/loadbalancer/nginx.conf:/etc/nginx/nginx.conf"
+                    - ~/.ssh/id_rsa.pub:/home/ubuntu/.ssh/authorized_keys
+                  depends_on:
+                    - app
+                loadbalancer2:
+                  image: nginx:1.17.1
+                  volumes:
+                    - "{{ playbook_dir }}/loadbalancer/nginx.conf:/etc/nginx/nginx.conf"
+                    - ~/.ssh/id_rsa.pub:/home/ubuntu/.ssh/authorized_keys
+                  depends_on:
+                    - app
+                loadbalancer3:
+                  image: nginx:1.17.1
+                  volumes:
+                    - "{{ playbook_dir }}/loadbalancer/nginx.conf:/etc/nginx/nginx.conf"
+                    - ~/.ssh/id_rsa.pub:/home/ubuntu/.ssh/authorized_keys
+                  depends_on:
+                    - app
+                app:
+                  container_name: app
+                  build: "{{ playbook_dir }}/app/"
+                  volumes:
+                    - "{{ playbook_dir }}/ansible/ansible.key.pub:/root/.ssh/authorized_keys"
+                  ports:
+                    - 8080
+      register: output
+    - debug:
+        var: output
+
+    #here we check our services are actually running
+    - assert:
+        that:
+          - "loadbalancer1.node_loadbalancer1_1.state.running"
+          - "loadbalancer2.node_loadbalancer2_1.state.running"
+          - "loadbalancer3.node_loadbalancer3_1.state.running"
+          - "db.db.state.running"
+          - "reverse_proxy.reverse_proxy.state.running"
+          - "app.app.state.running"
