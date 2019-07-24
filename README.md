@@ -8,8 +8,8 @@ This is a base environment for practical exercices on Ansible during trainings a
 * pip3 install docker-compose
 
 ### Deploying our base containers by using an ansible playbook
-
-`$ ansible-playbook inline_docker_playbook.yml`
+* `$ source ansible/aliases`
+* `$ ansible-playbook inline_docker_playbook.yml`
 
 Once the playbook has been played, aliases will be exported to the current user shell session, they will allow the current user to cast docker commands without caring about docker.
 
@@ -26,4 +26,3 @@ Inventory must be placed within `ansible/inventory`, a default inventory file is
 A test playbook has been placed within ansible/playbooks, it will setup nginx on 'app' by using apt-get, and will start the service.
 
 `$ ansible-playbook -i ansible/inventory/inventory.yml  ansible/playbooks/test.yml`
-
