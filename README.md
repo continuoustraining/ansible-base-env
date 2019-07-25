@@ -4,7 +4,7 @@ This project aims to use ansible with docker containers. It allows the user to r
 This is a base environment for practical exercices on Ansible during trainings and coachings.
 
 ### Diagram
-
+![high level architecture](https://github.com/continuoustraining/ansible-base-env/blob/master/ansible.png?raw=true)
 
 ### Dependencies
 * `pip3 install ansible`
