@@ -19,11 +19,13 @@ user@host:~$ pip3 install docker-compose
 ### Deploying our base containers by using an ansible playbook
 
 ```console
-user@host:~$ source ansible/aliases
+user@host:~$ ansible-playbook inline_docker_playbook.yml
 ```
 
+### Sourcing aliases in order to use dockerized ansible in place of localhost ansible
+
 ```console
-user@host:~$ ansible-playbook inline_docker_playbook.yml
+user@host:~$ source ansible/aliases
 ```
 
 Once the playbook has been played, aliases will be exported to the current user shell session, they will allow the current user to cast docker commands without caring about docker.
