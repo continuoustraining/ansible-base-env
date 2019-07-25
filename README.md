@@ -38,7 +38,7 @@ Inventory must be placed within `ansible/inventory`, a default inventory file is
 Any container can be added to this inventory, has long as the pub ssh key is referenced in authorized_keys on the container (as a volume `"{{ playbook_dir }}/ansible/ansible.key.pub:/root/.ssh/authorized_keys"`), and that sshd is started by using an entrypoint.
 If your lab requires several hosts, you need to replicate app's entrypoint and volume configurations for these containers.
 
-app entrypoint script: we start our ssh serven, then we listen to any command
+app entrypoint script: we start our ssh server, then we listen to any command:
 
 ```bash
 #!/bin/sh
