@@ -7,14 +7,18 @@ This is a base environment for practical exercices on Ansible during trainings a
 ![high level architecture](https://github.com/continuoustraining/ansible-base-env/blob/master/ansible.png?raw=true)
 
 ### Dependencies
-* ```console
+
+```console
 user@host: pip3 install ansible
 ```
-* ```console
-user@host:pip3 install docker-compose``
+
+```console
+user@host:pip3 install docker-compose
+```
 
 ### Deploying our base containers by using an ansible playbook
-* ```console
+
+```console
 user@host: source ansible/aliases
 ```
 
@@ -35,6 +39,7 @@ Any container can be added to this inventory, has long as the pub ssh key is ref
 If your lab requires several hosts, you need to replicate app's entrypoint and volume configurations for these containers.
 
 app entrypoint script: we start our ssh serven, then we listen to any command
+
 ```bash
 #!/bin/sh
 set -x
