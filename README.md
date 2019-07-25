@@ -23,7 +23,7 @@ Playbooks must be placed within `ansible/playbooks`
 ### Inventory
 
 Inventory must be placed within `ansible/inventory`, a default inventory file is already placed, referencing the 'app' container as an host. You don't need IPs, because you are using docker, containers have hostnames.
-
+Any container can be added to this inventory, has long as the pub ssh key is referenced in authorized_hosts on the container (as a volume), and that sshd is starting by using an entrypoint. If your lab requires several hosts, you need to replicate app entrypoiny.sh script and volume configuration for authorized_keys.
 ### Playing a test playbook
 
 A test playbook has been placed within ansible/playbooks, it will setup nginx on 'app' by using apt-get, and will start the service.
