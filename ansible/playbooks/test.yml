@@ -1,11 +1,13 @@
 ---
 - hosts: app
   remote_user: root
-  gather_facts: true
   tasks:
     - name: "nginx setup"
-      apt: 
+      apt:
         update_cache: yes
         name: nginx
-    - name: "nginx startup"
-      shell: service nginx start
+        state: present
+    - name: "nginx start"
+      service_status:
+        service: nginx
+        state: present
