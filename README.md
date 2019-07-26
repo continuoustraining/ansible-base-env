@@ -39,6 +39,7 @@ Playbooks must be placed within `ansible/playbooks`
 Inventory must be placed within `ansible/inventory`, a default inventory file is already placed, referencing the 'app' container as an host. You don't need IPs, because you are using docker, containers have hostnames.
 Any container can be added to this inventory, has long as the pub ssh key is referenced in authorized_keys on the container (as a volume `"{{ playbook_dir }}/ansible/ansible.key.pub:/root/.ssh/authorized_keys"`), and that sshd is started by using an entrypoint.
 If your lab requires several hosts, you need to replicate app's entrypoint and volume configurations for these containers.
+Please specify a container_name if you add another container to the stack, then edit run checks.
 
 app entrypoint script: we start our ssh server, then we listen to any command:
 

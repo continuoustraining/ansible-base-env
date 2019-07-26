@@ -18,6 +18,7 @@
                     - "{{ playbook_dir }}/ansible/ansible.key.pub:/root/.ssh/id_rsa.pub"
                     - "{{ playbook_dir }}/ansible/ansible.key:/root/.ssh/id_rsa"
                 db:
+                  container_name: db
                   image: redis:4.0
                   ports:
                     - 22
@@ -33,18 +34,21 @@
                   depends_on:
                     - app
                 loadbalancer1:
+                  container_name: loadbalancer1
                   image: nginx:1.17.1
                   volumes:
                     - "{{ playbook_dir }}/loadbalancer/nginx.conf:/etc/nginx/nginx.conf"
                   depends_on:
                     - app
                 loadbalancer2:
+                  container_name: loadbalancer2
                   image: nginx:1.17.1
                   volumes:
                     - "{{ playbook_dir }}/loadbalancer/nginx.conf:/etc/nginx/nginx.conf"
                   depends_on:
                     - app
                 loadbalancer3:
+                  container_name: loadbalancer3
                   image: nginx:1.17.1
                   volumes:
                     - "{{ playbook_dir }}/loadbalancer/nginx.conf:/etc/nginx/nginx.conf"
@@ -125,9 +129,9 @@
     #here we check our services are actually running
     - assert:
         that:
-          - "loadbalancer1.node_loadbalancer1_1.state.running"
-          - "loadbalancer2.node_loadbalancer2_1.state.running"
-          - "loadbalancer3.node_loadbalancer3_1.state.running"
+          - "loadbalancer1.loadbalancer1.state.running"
+          - "loadbalancer2.loadbalancer2.state.running"
+          - "loadbalancer3.loadbalancer3.state.running"
           - "db.db.state.running"
           - "reverse_proxy.reverse_proxy.state.running"
           - "app.app.state.running"
