@@ -8,18 +8,22 @@ This is a base environment for practical exercices on Ansible during trainings a
 
 ### Dependencies
 
-Install docker for your system
-Install pip3 for your system
+* Install docker for your system
 
-Add user to docker group, in order to use Ansible with your current user in order to deploy our stack
+* Install pip3 for your system
+
+* Add user to docker group, in order to use Ansible with your current user in order to deploy our stack
 
 ```console
 user@host:~$ sudo usermod -aG docker $USER
 ```
 
+* Install ansible on your system
+
 ```console
 user@host:~$ pip3 install ansible
 ```
+* Install docker-compose using pip3 (needed for docker_compose module we use in our initial playbook)
 
 ```console
 user@host:~$ pip3 install docker-compose
