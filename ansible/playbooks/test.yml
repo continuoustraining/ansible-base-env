@@ -7,7 +7,13 @@
         update_cache: yes
         name: nginx
         state: present
-    - name: "nginx start"
+    - name: "nginx start using custom module"
       service_status:
         service: nginx
         state: present
+    - name: "custom plugin output method a"
+      debug:
+        msg: "{{'test'|a_filter}}"
+    - name: "custom plugin output method b"
+      debug:
+        msg: "{{'test'|another_filter('the','filters')}}"
