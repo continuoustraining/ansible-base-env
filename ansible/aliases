@@ -2,3 +2,4 @@ alias ansible="docker exec -it ansible ansible"
 alias ansible-inventory="docker exec -it ansible ansible-inventory"
 alias ansible-playbook="docker exec -it ansible ansible-playbook"
 alias ansible-doc="docker exec -it ansible ansible-doc"
+chmod 0600 ./ansible/*key*
