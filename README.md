@@ -9,21 +9,23 @@ This is a base environment for practical exercices on Ansible during trainings a
 ### Dependencies
 
 ```console
-user@host: pip3 install ansible
+user@host:~$ pip3 install ansible
 ```
 
 ```console
-user@host:pip3 install docker-compose
+user@host:~$ pip3 install docker-compose
 ```
 
 ### Deploying our base containers by using an ansible playbook
 
 ```console
-user@host: source ansible/aliases
+user@host:~$ ansible-playbook inline_docker_playbook.yml
 ```
 
+### Sourcing aliases in order to use dockerized ansible in place of localhost ansible
+
 ```console
-user@host: ansible-playbook inline_docker_playbook.yml
+user@host:~$ source ansible/aliases
 ```
 
 Once the playbook has been played, aliases will be exported to the current user shell session, they will allow the current user to cast docker commands without caring about docker.
@@ -38,7 +40,7 @@ Inventory must be placed within `ansible/inventory`, a default inventory file is
 Any container can be added to this inventory, has long as the pub ssh key is referenced in authorized_keys on the container (as a volume `"{{ playbook_dir }}/ansible/ansible.key.pub:/root/.ssh/authorized_keys"`), and that sshd is started by using an entrypoint.
 If your lab requires several hosts, you need to replicate app's entrypoint and volume configurations for these containers.
 
-app entrypoint script: we start our ssh serven, then we listen to any command
+app entrypoint script: we start our ssh server, then we listen to any command:
 
 ```bash
 #!/bin/sh
@@ -52,6 +54,6 @@ exec "$@"
 A test playbook has been placed within ansible/playbooks, it will setup nginx on 'app' by using apt-get, and will start the service.
 
 ```console
-user@host: ansible-playbook -i ansible/inventory/inventory.yml  ansible/playbooks/test.yml
+user@host:~$ ansible-playbook -i ansible/inventory/inventory.yml  ansible/playbooks/test.yml
 ```
 
