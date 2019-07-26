@@ -58,3 +58,15 @@ A test playbook has been placed within ansible/playbooks, it will setup nginx on
 user@host:~$ ansible-playbook -i ansible/inventory/inventory.yml  ansible/playbooks/test.yml
 ```
 
+### Troubleshooting
+
+```
+fatal: [app]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added 'app,172.22.0.2' (ECDSA) to the list of known hosts.\r\nPermission denied (publickey,password).", "unreachable": true}
+```
+Means that your aliases have not been sourced after the initial playbook, app can't be accessed outside of your docker network, please source the aliases.
+
+```console
+user@host:~$ source ansible/aliases
+```
+
+
