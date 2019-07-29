@@ -21,12 +21,12 @@ user@host:~$ sudo usermod -aG docker $USER
 * Install ansible on your system
 
 ```console
-user@host:~$ pip3 install ansible
+user@host:~$ pip3 install ansible --user
 ```
 * Install docker-compose using pip3 (needed for docker_compose module we use in our initial playbook)
 
 ```console
-user@host:~$ pip3 install docker-compose
+user@host:~$ pip3 install docker-compose --user
 ```
 
 ### Deploying our base containers by using an ansible playbook
