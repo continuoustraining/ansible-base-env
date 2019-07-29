@@ -59,6 +59,7 @@ app entrypoint script: we start our ssh server, then we listen to any command:
 ```bash
 #!/bin/sh
 set -x
+chown -R root:root /root/.ssh
 /usr/sbin/sshd -D
 exec "$@"
 ```
@@ -82,4 +83,4 @@ Means that your aliases have not been sourced after the initial playbook, app ca
 user@host:~$ source ansible/aliases
 ```
 
-
+Also, for some images, like Node images, if deployed on GNU/Linux, the user ID can the same as on the host, creating ssh authentication conflicts. Don't forget to chown /root/.ssh to the root user.
