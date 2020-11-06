@@ -21,10 +21,9 @@ user@host:~$ sudo update-alternatives --set python /usr/local/bin/python3.6
 user@host:~$ sudo pip install --upgrade pip
 user@host:~$ sudo ln -s /usr/local/bin/pip /usr/bin/pip
 user@host:~$ pip uninstall docker docker-py docker-compose
-user@host:~$ pip uninstall docker docker-py docker-compose
 user@host:~$ pip install ansible --user
 user@host:~$ pip install docker-compose --user
-
+user@host:~$ docker system prune -a
 ```
 
 #### Other system
