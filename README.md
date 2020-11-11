@@ -14,6 +14,20 @@ This is a base environment for practical exercices on Ansible during trainings a
 
 * Add user to docker group, in order to use Ansible with your current user in order to deploy our stack
 
+#### If you use Cloud9 Amazon Linux
+
+```console
+user@host:~$ sudo update-alternatives --set python /usr/bin/python3.6
+user@host:~$ sudo pip install --upgrade pip
+user@host:~$ sudo ln -s /usr/local/bin/pip /usr/bin/pip
+user@host:~$ pip uninstall docker docker-py docker-compose
+user@host:~$ pip install ansible --user
+user@host:~$ pip install docker-compose --user
+user@host:~$ docker system prune -a
+```
+
+#### Other system
+
 ```console
 user@host:~$ sudo usermod -aG docker $USER
 ```
